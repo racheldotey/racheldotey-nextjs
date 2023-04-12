@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 import Link from 'next/link';
 import AppBar from '@mui/material/AppBar';
@@ -97,7 +95,7 @@ export default function AppHeader() {
 
   return (
     <header>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ marginBottom: 8}}>
         <Container maxWidth="lg">
           <Toolbar disableGutters>
             <LogoLarge />
