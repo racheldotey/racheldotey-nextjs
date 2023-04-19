@@ -1,11 +1,16 @@
 import * as React from 'react';
+import Image from 'next/image';
+import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Unstable_Grid2';
+
+import FollowMySocials from '../components/follow-my-socials';
+import profilePic from '../assets/images/profile-image-rachel.png';
 
 const AboutTextSection: React.FC = () => {
   return (
-    <>
+    <Box sx={{ typography: 'body1' }}>
       <Divider textAlign="left">How it started</Divider>
       <p>
         Hello! I'm Rachel, a{' '}
@@ -73,7 +78,23 @@ const AboutTextSection: React.FC = () => {
         My goal is to provide the best possible results for my clients by using
         the most suitable tools and frameworks for each project.
       </p>
-    </>
+    </Box>
+  );
+};
+
+const ProfileImageSection: React.FC = () => {
+  return (
+    <Box sx={{ typography: 'body1' }}>
+      <Box>
+        <Image
+          src={profilePic}
+          alt="Picture of the author"
+          height={200}
+          width={200}
+        />
+      </Box>
+      <FollowMySocials />
+    </Box>
   );
 };
 
@@ -83,18 +104,12 @@ export default function About() {
       <Container maxWidth="lg">
         <p>About</p>
 
-        <Grid
-          container
-          direction="row"
-          spacing={4}
-          justifyContent="space-between"
-          alignItems="stretch"
-        >
-          <Grid item xs>
+      <Grid container spacing={1}>
+        <Grid xs={8}>
             <AboutTextSection />
           </Grid>
-          <Grid item xs>
-            <AboutTextSection />
+        <Grid xs={4} display="flex" justifyContent="center">
+            <ProfileImageSection />
           </Grid>
         </Grid>
       </Container>
