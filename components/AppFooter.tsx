@@ -1,7 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Unstable_Grid2';
+import Image from 'next/image';
 import Typography from '@mui/material/Typography';
+
+import signaturePic from '../assets/images/signature_236x64.png';
 
 const copyright = `© 2012-${new Date().getFullYear()} Rachel Dotey, Web & App Development`;
 
@@ -17,7 +21,14 @@ export default function AppFooter() {
         }}
       >
         <Container maxWidth="lg" sx={{ color: 'text.secondary' }}>
-          <Typography variant="body2">{copyright}</Typography>
+          <Grid container spacing={1}>
+            <Grid xs={6}>
+              <Image src={signaturePic} alt={copyright} />
+            </Grid>
+            <Grid xs={6} display="flex" justifyContent="right">
+              <Typography variant="body2">{copyright}</Typography>
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </footer>
