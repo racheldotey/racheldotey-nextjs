@@ -15,7 +15,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 
-import { useTheme } from '../themes/ProvideTheme';
+import { useTheme } from '../../themes/ProvideTheme';
+
+type onClickHandlerType = (event: React.MouseEvent<HTMLElement>) => void;
 
 const navItems = [
   {
@@ -40,7 +42,7 @@ const navItems = [
   },
 ];
 
-const LogoSmall: React.FC = () => {
+const CompactLogo: React.FC = () => {
   return (
     <Typography
       variant="h5"
@@ -62,7 +64,7 @@ const LogoSmall: React.FC = () => {
   );
 };
 
-const LogoLarge: React.FC = () => {
+const FullLogo: React.FC = () => {
   return (
     <Typography
       variant="h6"
@@ -84,10 +86,74 @@ const LogoLarge: React.FC = () => {
   );
 };
 
+const FullMenu: React.FC<{ onClick: onClickHandlerType }> = ({ onClick }) => {
+  return (
+    <>
+      {navItems.map(page => (
+        <Link key={page.title} href={page.href} passHref>
+          <Button
+            key={page.title}
+            onClick={onClick}
+            sx={{ my: 2, color: 'white', display: 'block' }}
+          >
+            {page.title}
+          </Button>
+        </Link>
+      ))}
+    </>
+  );
+};
+
+const CompactMenu: React.FC<{
+  element: HTMLElement | null;
+  onClick: onClickHandlerType;
+  onClose: onClickHandlerType;
+}> = ({ element, onClick, onClose }) => {
+  return (
+    <>
+      <IconButton
+        size="large"
+        aria-label="account of current user"
+        aria-controls="menu-appbar"
+        aria-haspopup="true"
+        onClick={onClick}
+        color="inherit"
+      >
+        <MenuIcon />
+      </IconButton>
+      <Menu
+        id="menu-appbar"
+        anchorEl={element}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={Boolean(element)}
+        onClose={onClose}
+        sx={{
+          display: { xs: 'block', md: 'none' },
+        }}
+      >
+        {navItems.map(page => (
+          <MenuItem key={page.title} onClick={onClose}>
+            <Typography textAlign="center">{page.title}</Typography>
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+};
+
 const ThemeSelectionButton: React.FC = () => {
   const { currentTheme, setTheme } = useTheme();
 
-  const handleSetThemeClick = (event: React.MouseEvent<HTMLElement>) => setTheme(currentTheme === 'light' ? 'dark' : 'light');
+  const handleSetThemeClick = (event: React.MouseEvent<HTMLElement>) =>
+    setTheme(currentTheme === 'light' ? 'dark' : 'light');
 
   return (
     <IconButton
@@ -122,77 +188,30 @@ export const AppHeader: React.FC = () => {
     setAnchorElNav(null);
   };
 
-  const handleThemeMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElTheme(event.currentTarget);
-  };
-
-  const handleThemeMenuClose = () => {
-    setAnchorElTheme(null);
-  };
-
   return (
     <header>
-      <AppBar position="static" sx={{ marginBottom: 8 }} enableColorOnDark>
+      <AppBar position="static" sx={{ marginBottom: 6 }} enableColorOnDark>
         <Container maxWidth="lg">
           <Toolbar disableGutters>
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}>
+              <FullLogo />
+            </Box>
+
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <LogoLarge />
+              <FullMenu onClick={handleCloseNavMenu} />
             </Box>
 
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <LogoSmall />
-            </Box>
-
-            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {navItems.map(page => (
-                <Link key={page.title} href={page.href} passHref>
-                  <Button
-                    key={page.title}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
-                  >
-                    {page.title}
-                  </Button>
-                </Link>
-              ))}
-            </Box>
-
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
+            <Box sx={{ display: { xs: 'flex', md: 'none', flexGrow: 1 } }}>
+              <CompactMenu
+                element={anchorElNav}
                 onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: 'block', md: 'none' },
-                }}
-              >
-                {navItems.map(page => (
-                  <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page.title}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box> */}
+              />
+            </Box>
+
+            <Box sx={{ display: { xs: 'flex', md: 'none', flexGrow: 1 } }}>
+              <CompactLogo />
+            </Box>
 
             <Box sx={{ display: { xs: 'flex' } }}>
               <ThemeSelectionButton />

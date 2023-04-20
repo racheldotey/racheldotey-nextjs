@@ -4,6 +4,7 @@ import { AppProps } from 'next/app';
 
 import { ProvideCache } from '../themes/ProvideCache';
 import { ProvideTheme } from '../themes/ProvideTheme';
+import { AppLayout } from '../components/app-layout/AppLayout';
 
 import '@/styles/globals.css';
 // import '@fontsource/roboto/300.css';
@@ -24,7 +25,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ProvideTheme>
         <CssBaseline />
-        <Component {...pageProps} />
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
       </ProvideTheme>
     </ProvideCache>
   );

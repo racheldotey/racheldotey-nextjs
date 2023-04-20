@@ -5,11 +5,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 
-import signaturePic from '../assets/images/signature_236x64.png';
+import signaturePic from '../../assets/images/signature_236x64.png';
 
 const copyright = `© 2012-${new Date().getFullYear()} Rachel Dotey, Web & App Development`;
 
-export default function AppFooter() {
+export const AppFooter: React.FC = () => {
   return (
     <footer>
       <Box
@@ -33,4 +33,6 @@ export default function AppFooter() {
       </Box>
     </footer>
   );
-}
+};
+
+export default AppFooter;

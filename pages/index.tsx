@@ -8,7 +8,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 import iDesignExperiencesPic from '../assets/images/laptop-i-design-experiences.jpg';
-import { AppLayout } from '../components/AppLayout';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -55,7 +54,7 @@ const WelcomeSection: React.FC = () => {
 
 export default function Home() {
   return (
-    <AppLayout>
+    <>
       <Head>
         <title>Welcome | RachelDotey.ninja</title>
       </Head>
@@ -63,6 +62,6 @@ export default function Home() {
         <AboveFoldSection />
         <WelcomeSection />
       </main>
-    </AppLayout>
+    </>
   );
 }
