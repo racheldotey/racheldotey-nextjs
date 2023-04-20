@@ -1,15 +1,21 @@
 import * as React from 'react';
 import Link from 'next/link';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+
+import { useTheme } from './ThemeContext';
 
 const navItems = [
   {
@@ -34,7 +40,7 @@ const navItems = [
   },
 ];
 
-function LogoSmall() {
+const LogoSmall: React.FC = () => {
   return (
     <Typography
       variant="h5"
@@ -43,7 +49,6 @@ function LogoSmall() {
       href=""
       sx={{
         mr: 2,
-        display: { xs: 'flex', md: 'none' },
         flexGrow: 1,
         fontFamily: 'monospace',
         fontWeight: 700,
@@ -55,9 +60,9 @@ function LogoSmall() {
       LOGOb
     </Typography>
   );
-}
+};
 
-function LogoLarge() {
+const LogoLarge: React.FC = () => {
   return (
     <Typography
       variant="h6"
@@ -66,7 +71,6 @@ function LogoLarge() {
       href="/"
       sx={{
         mr: 2,
-        display: { xs: 'none', md: 'flex' },
         flexGrow: 1,
         fontFamily: 'monospace',
         fontWeight: 700,
@@ -78,10 +82,42 @@ function LogoLarge() {
       LOGOa
     </Typography>
   );
-}
+};
 
-export default function AppHeader() {
+const ThemeSelectionButton: React.FC = () => {
+  const { currentTheme, setTheme } = useTheme();
+
+    console.log('ThemeSelectionButton');
+  const handleSetThemeClick = (event: React.MouseEvent<HTMLElement>) => {
+    console.log('clicked');
+    //setTheme(currentTheme === 'light' ? 'dark' : 'light');
+  };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(event.target);
+  };
+
+  return (
+    <IconButton
+      size="medium"
+      aria-label="change website theme"
+      aria-controls="menu-appbar"
+      color="inherit"
+      onClick={handleClick}
+    >
+      {currentTheme === 'light' ? (
+        <LightModeOutlinedIcon />
+      ) : (
+        <DarkModeOutlinedIcon />
+      )}
+    </IconButton>
+  );
+};
+
+export const AppHeader: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElTheme, setAnchorElTheme] = React.useState<null | HTMLElement>(
     null
   );
 
@@ -93,15 +129,28 @@ export default function AppHeader() {
     setAnchorElNav(null);
   };
 
+  const handleThemeMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElTheme(event.currentTarget);
+  };
+
+  const handleThemeMenuClose = () => {
+    setAnchorElTheme(null);
+  };
+
   return (
     <header>
-      <AppBar position="static" sx={{ marginBottom: 8}}>
+      <AppBar position="static" sx={{ marginBottom: 8 }} enableColorOnDark>
         <Container maxWidth="lg">
           <Toolbar disableGutters>
-            <LogoLarge />
-            <LogoSmall />
-
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <LogoLarge />
+            </Box>
+
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+              <LogoSmall />
+            </Box>
+
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               {navItems.map(page => (
                 <Link key={page.title} href={page.href} passHref>
                   <Button
@@ -150,10 +199,16 @@ export default function AppHeader() {
                   </MenuItem>
                 ))}
               </Menu>
+            </Box> */}
+
+            <Box sx={{ display: { xs: 'flex' } }}>
+              <ThemeSelectionButton />
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
     </header>
   );
-}
+};
+
+export default AppHeader;
