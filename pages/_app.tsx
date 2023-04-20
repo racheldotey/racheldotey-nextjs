@@ -1,7 +1,8 @@
-import type { AppProps } from 'next/app';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../styles/theme';
+import type { AppProps } from 'next/app';
+
+import { ProvideTheme } from '../components/ThemeContext';
 
 import '@/styles/globals.css';
 // import '@fontsource/roboto/300.css';
@@ -11,9 +12,9 @@ import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme}>
+    <ProvideTheme>
       <CssBaseline />
       <Component {...pageProps} />
-    </ThemeProvider>
+    </ProvideTheme>
   );
 }
