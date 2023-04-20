@@ -1,11 +1,11 @@
 import light from './light.theme';
 import dark from './dark.theme';
 
-const themes: {[k: string]: any} = {
+const themes: { [k: string]: any } = {
   light,
   dark,
 };
 
-export default function getTheme(theme: string) {
-  return themes[theme];
-};
+export const getTheme = (theme: string) => themes[theme];
+
+export default getTheme;
