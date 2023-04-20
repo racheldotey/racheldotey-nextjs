@@ -1,11 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { getTheme } from '../themes';
+import { getTheme } from '.';
 
 const SAVED_THEME = 'appTheme';
 const DEFAULT_THEME = 'light';
 
-export const ThemeContext = createContext({
+const ThemeContext = createContext({
   currentTheme: DEFAULT_THEME,
   setTheme: (t: string) => {},
 });

@@ -15,7 +15,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 
-import { useTheme } from './ThemeContext';
+import { useTheme } from '../themes/ProvideTheme';
 
 const navItems = [
   {
@@ -87,14 +87,7 @@ const LogoLarge: React.FC = () => {
 const ThemeSelectionButton: React.FC = () => {
   const { currentTheme, setTheme } = useTheme();
 
-    console.log('ThemeSelectionButton');
-  const handleSetThemeClick = (event: React.MouseEvent<HTMLElement>) => {
-    console.log('clicked');
-    //setTheme(currentTheme === 'light' ? 'dark' : 'light');
-  };
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(event.target);
-  };
+  const handleSetThemeClick = (event: React.MouseEvent<HTMLElement>) => setTheme(currentTheme === 'light' ? 'dark' : 'light');
 
   return (
     <IconButton
@@ -102,7 +95,7 @@ const ThemeSelectionButton: React.FC = () => {
       aria-label="change website theme"
       aria-controls="menu-appbar"
       color="inherit"
-      onClick={handleClick}
+      onClick={handleSetThemeClick}
     >
       {currentTheme === 'light' ? (
         <LightModeOutlinedIcon />
